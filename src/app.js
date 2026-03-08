@@ -1,26 +1,21 @@
 const express = require("express");
 const app = express();
+const {adminAuth, userAuth } = require("./middlewares/Auth.jsx")
 
-app.use("/home", (req, res) => {
-  res.send("welcome this is the home page");
-});
+app.use("/route", adminAuth);
 
-app.get("/user", (req, res) => {
-  res.send({ firstName: "architi", lastName: "dadhwal" });
-});
+app.get("/route/One", (req,res)=>{
+    res.send("user data sent");
+})
 
-app.post("/user", (req, res) => {
-  res.send("omg it looks like the db has saved the data sucessfully");
-});
+app.delete("/user/data",userAuth, (req,res) => {
+    res.send("user data has been deleted!");
+})
 
-app.put("/user", (req, res) => {
-  res.send("data updated successfully");
-});
+app.use("/user/login", (req,res)=>{
+    res.send("hi there!")
+})
 
-app.delete("/user", (req, res) => {
-  res.send("you rmbr the data? yeah its deleted now");
-});
-
-app.listen(7777, () => {
-  console.log("hello user!the server is listening on port 7777");
-});
+app.listen(7777,()=>{
+    console.log("Server is listening / running on port 7777");
+})
