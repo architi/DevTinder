@@ -5,13 +5,10 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/signup", async (req, res) => {
-
-  const useremailId = req.body.emailId;
-
+app.get("/feed", async (req, res) => {
   try {
-    const matchEmail = new User.findOne({emailId : useremailId});
-    res.send(matchEmail);
+    const feed = User.find({});
+    res.send(feed);
   } catch (error) {
     res.status(400).send("error saving the user" + error.message);
   }
