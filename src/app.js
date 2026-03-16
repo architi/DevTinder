@@ -3,16 +3,13 @@ const ConnectDB = require("./config/database");
 const User = require("./models/user");
 const app = express();
 
+app.use(express.json());
+
 app.post("/signup", async (req, res) => {
-  const newDoc = new User({
-    firstName: "anjali",
-    lastName: "ramanujan",
-    emailId: "anjali@ramanujan.com",
-    password: "123anjali",
-  });
+  const user = new User(req.body);
 
   try {
-    await newDoc.save();
+    await user.save();
     res.send("new document has been successfully added!");
   } catch (error) {
     res.status(400).send("error saving the user" + error.message);
@@ -27,5 +24,5 @@ ConnectDB()
     });
   })
   .catch((error) => {
-    console.log("caught an error mb dawg");
+    console.log("caught an error in connecting the DB mb dawg");
   });
