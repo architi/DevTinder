@@ -5,12 +5,13 @@ const app = express();
 
 app.use(express.json());
 
-app.post("/signup", async (req, res) => {
-  const user = new User(req.body);
+app.get("/signup", async (req, res) => {
+
+  const useremailId = req.body.emailId;
 
   try {
-    await user.save();
-    res.send("new document has been successfully added!");
+    const matchEmail = new User.findOne({emailId : useremailId});
+    res.send(matchEmail);
   } catch (error) {
     res.status(400).send("error saving the user" + error.message);
   }
