@@ -5,7 +5,7 @@ const Mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    require: true,
+    required: true,
     minLength: 3,
     maxLength: 15,
   },
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate(value) {
       if (!validator.isEmail(value)) {
-        throw new error("invalid email address:" + value);
+        throw new Error("invalid email address:" + value);
       }
     },
   },
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
     maxLength: 20,
     validate(value) {
       if (!validator.isStrongPassword(value)) {
-        throw new error("Oops! not a strong password, try again" + value);
+        throw new Error("Oops! not a strong password, try again" + value);
       }
     },
   },
@@ -42,11 +42,11 @@ const userSchema = new mongoose.Schema({
     type: [String],
   },
   phoneNumber: {
-    type: Number,
+    type: String,
     default: "XXX-XXXX-XXX",
     validate(value) {
       if (!/^\d{10}$/.test(value)) {
-        throw new error("you just entered invalid phone number");
+        throw new Error("you just entered invalid phone number");
       }
     },
   },
@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     validate(value) {
       if (!["male", "female", "others"].includes(value)) {
-        throw new error("gender data is not valid");
+        throw new Error("gender data is not valid");
       }
     },
   },

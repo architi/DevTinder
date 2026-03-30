@@ -2,26 +2,24 @@ const express = require("express");
 const app = express();
 const ConnectDB = require("./config/database");
 const User = require("./models/user");
-const {validateSignUp} = require("./utils/validatation");
-const bcrypt = require ("bcrypt");
-
+const { validateSignUp } = require("./utils/validatation");
+const bcrypt = require("bcrypt");
 
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
-
   //creating new instance in the collection.
-  //validation , validator , util fn 
+  //validation , validator , util fn
   //password encription from validation ,passwordHash
-  //save the user in db with the passwordHash saltround password 
+  //save the user in db with the passwordHash saltround password
   try {
     //validation
     validateSignUp(req);
 
-    const {firstName, lastName, emailId,password} = req.body; 
+    const { firstName, lastName, emailId, password } = req.body;
 
     //password encryption
-    const passwordHash = bcrypt.hash(password,10)
+    const passwordHash = await bcrypt.hash(password, 10);
 
     //saving the data in db now
     const user = new User({
@@ -32,8 +30,7 @@ app.post("/signup", async (req, res) => {
     });
 
     await user.save();
-    res.send("new user has succesfully been created!" + user)
-    
+    res.send("new user has succesfully been created!" + user);
   } catch (error) {
     res.status(400).send("error in signing up please check" + error.message);
   }
@@ -78,16 +75,16 @@ app.patch("/user/:userId", async (req, res) => {
 
   try {
     const updationAllowed = ["skills", "gender"];
-    const checkUpdation = object
-      .keys(data)
-      .every((key) => updationAllowed.includes(key));
+    const checkUpdation = Object.keys(data).every((key) =>
+      updationAllowed.includes(key),
+    );
 
     if (!checkUpdation) {
-      throw new error("update not allowed");
+      throw new Error("update not allowed");
     }
 
-    if (data?.skills.length>10) {
-      throw new error("skills cant be more than 10")
+    if (data?.skills.length > 10) {
+      throw new Error("skills cant be more than 10");
     }
     const user = await User.findOneAndUpdate({ _id: userId }, data, {
       returnDocument: "after",

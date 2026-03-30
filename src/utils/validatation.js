@@ -1,15 +1,14 @@
 const validator = require("validator");
 
-const validateSignUp = (req)=>{
+const validateSignUp = (req) => {
     const {firstName,lastName,emailId,password} = req.body;
 
     if(!firstName || !lastName ){
-        throw new error("error with your name");
+        throw new Error("error with your name");
     }else if (!validator.isEmail(emailId)){
-        throw new error ("invalid email address");
+        throw new Error ("invalid email address");
     }else if(!validator.isStrongPassword(password)){
-        throw new error("not a strong enough password");
+        throw new Error("not a strong enough password");
     }
 }
-
-exports.modules = {validateSignUp}; 
+module.exports = {validateSignUp}; 
