@@ -2,13 +2,40 @@ const express = require("express");
 const app = express();
 const ConnectDB = require("./config/database");
 const User = require("./models/user");
+const {validateSignUp} = require("./utils/validatation");
+const bcrypt = require ("bcrypt");
+
 
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
+
+  //creating new instance in the collection.
+  //validation , validator , util fn 
+  //password encription from validation ,passwordHash
+  //save the user in db with the passwordHash saltround password 
   try {
+    //validation
+    validateSignUp(req);
+
+    const {firstName, lastName, emailId,password} = req.body; 
+
+    //password encryption
+    const passwordHash = bcrypt.hash(password,10)
+
+    //saving the data in db now
+    const user = new User({
+      firstName,
+      lastName,
+      emailId,
+      password: passwordHash,
+    });
+
+    await user.save();
+    res.send("new user has succesfully been created!" + user)
+    
   } catch (error) {
-    res.status(400).res("error in signing up please check" + error.message);
+    res.status(400).send("error in signing up please check" + error.message);
   }
 });
 
