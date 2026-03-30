@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
     type: [String],
   },
   phoneNumber: {
-    type: String,
+    type: Number,
     default: "XXX-XXXX-XXX",
     validate(value) {
       if (!/^\d{10}$/.test(value)) {
@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
-  timestamp: true,
+  // timestamp:true,
 });
 
 const User = Mongoose.model("User", userSchema);
