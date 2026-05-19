@@ -4,8 +4,12 @@ const ConnectDB = require("./config/database");
 const User = require("./models/user");
 const { validateSignUp } = require("./utils/validatation");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
+const {userAuth} = require("./middlewares/Auth");
+
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
   //creating new instance in the collection.
@@ -21,7 +25,7 @@ app.post("/signup", async (req, res) => {
     //password encryption
     const passwordHash = await bcrypt.hash(password, 10);
 
-    //saving the data in db now
+    //saving the data in db with the passwordHash
     const user = new User({
       firstName,
       lastName,
@@ -36,6 +40,51 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.post("/login", async (req, res) => {
+  try {
+    const { emailId, password } = req.body;
+
+    const validUser = await User.findOne({ emailId: emailId });
+    if (!validUser) {
+      throw new Error("invalid credentials");
+    }
+
+    const validPassword = await bcrypt.compare(password, validUser.password);
+    if (validPassword) {
+
+      //creating a JWT token
+      const {token} = await jwt.sign({_id:User._id},"mysecret@key", { expiresIn: "7d" });
+
+      res.cookie("token", token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) });
+      res.send("successful login!");
+    } else {
+      throw new Error("invalid credentials");
+    }
+  } catch (error) {
+    res.status(400).send("ERROR :" + error.message);
+  }
+});
+
+app.get("/profile", userAuth, async (req, res) => {
+  try {
+    const user = req.user;
+    console.log("hi welcome back"+ user);
+
+    res.send(user);
+
+} catch (error) {
+  res.status(400).send("please log in again");
+}
+});
+
+app.post("/sendConnectionRequest", userAuth, async(req,res)=>{
+  try{
+    console.log("connection request sent");
+   res.send("connection request sent");
+  }catch(error){
+    res.status(400).send("error in sending connection request");
+  }
+})
 app.get("/feed", async (req, res) => {
   try {
     const feed = await User.find({});

@@ -9,11 +9,13 @@ const userSchema = new mongoose.Schema({
     minLength: 3,
     maxLength: 15,
   },
+
   lastName: {
     type: String,
     minLength: 3,
     maxLength: 15,
   },
+
   emailId: {
     type: String,
     required: true,
@@ -28,28 +30,21 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
+
   password: {
     type: String,
     minLength: 2,
-    maxLength: 20,
     validate(value) {
       if (!validator.isStrongPassword(value)) {
         throw new Error("Oops! not a strong password, try again" + value);
       }
     },
   },
+
   skills: {
     type: [String],
   },
-  phoneNumber: {
-    type: String,
-    default: "XXX-XXXX-XXX",
-    validate(value) {
-      if (!/^\d{10}$/.test(value)) {
-        throw new Error("you just entered invalid phone number");
-      }
-    },
-  },
+ 
   gender: {
     type: String,
     validate(value) {
@@ -58,8 +53,9 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
-  // timestamp:true,
-});
+},
+  {timestamps:true},
+);
 
 const User = Mongoose.model("User", userSchema);
 module.exports = User;
