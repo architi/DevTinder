@@ -21,4 +21,8 @@
 - GET /user/connections
 - GET /user/requests
 
-status: ignored,interested,accepted,rejected
+# status: ignored -> me SENDING left swipping/passing the userId +ent on the feed
+        interested -> me SENDING right swipping/liking the userId +ent on the feed
+        accepted -> my like has been accepted by the other userId
+        rejected -> i have been rejected by the other userId
+
