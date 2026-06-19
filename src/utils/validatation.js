@@ -11,4 +11,12 @@ const validateSignUp = (req) => {
         throw new Error("not a strong enough password");
     }
 }
-module.exports = {validateSignUp}; 
+
+const validateProfileEdit = (req) => {
+    const allowedFields = ["firstName", "lastName", "skills", "gender"];
+
+    const isValid = Object.keys(req.body).every((field) => allowedFields.includes(field));
+
+    return isValid;
+}
+module.exports = {validateSignUp, validateProfileEdit}; 
