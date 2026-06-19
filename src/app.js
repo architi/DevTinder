@@ -11,38 +11,6 @@ const requestRouter = require("./routes/request");
 const profileRouter = require("./routes/profile");
 
 
-// app.get("/feed", async (req, res) => {
-//   try {
-//     const feed = await User.find({});
-//     res.send(feed);
-//   } catch (error) {
-//     res.status(400).send("error saving the user" + error.message);
-//   }
-// });
-
-// app.get("/user", async (req, res) => {
-//   const UserEmailId = req.body.emailId;
-
-//   try {
-//     const users = await User.find({ emailId: UserEmailId });
-//     res.send(users);
-//   } catch (error) {
-//     res.send("error has been detected in fetching user by emailId");
-//   }
-// });
-
-// app.delete("/user", async (req, res) => {
-//   const userId = req.body.userId;
-//   try {
-//     const del = await User.findByIdAndDelete(userId);
-//     //const del = await User.findByIdAndDelete({_id: userId});
-
-//     res.send("deleted this successfully", del);
-//   } catch (err) {
-//     res.status(400).send("caught some error");
-//   }
-// });
-
 // //API - to update data of the user
 // app.patch("/user/:userId", async (req, res) => {
 //   const userId = req.params?.userId;
