@@ -10,6 +10,17 @@ const authRouter = require("./routes/auth");
 const requestRouter = require("./routes/request");
 const profileRouter = require("./routes/profile");
 
+app.use("/", (req,res,next)=>{
+  next();
+})
+
+app.post("/user", (req,res)=>{
+  next();
+},
+(req,res)=>{
+  res.send("hello from second middleware but i am a request handler cause i am sending the actual response to the client");
+})
+
 
 // //API - to update data of the user
 // app.patch("/user/:userId", async (req, res) => {
@@ -48,5 +59,5 @@ ConnectDB()
     });
   })
   .catch((error) => {
-    console.log("caught an error in connecting the DB mb dawg");
+    console.log("caught an error in connecting the database:" + error.message);
   });
