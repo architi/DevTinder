@@ -1,7 +1,9 @@
-const jwt = require("jsonwebtoken");
-const user = require("../models/user");
+//the userAuth middleware is responsible for verifying the user's authentication status by checking the token sent in the cookie. It ensures that only authenticated users can access protected routes, such as viewing and editing their profiles. If the token is valid, it allows the request to proceed; otherwise, it responds with an unauthorized error message.
 
-const cookies = require()
+const jwt = require("jsonwebtoken");
+const User = require("../models/user");
+
+const cookies = require();
 
 const userAuth = async(req, res, next) => {
   try {
