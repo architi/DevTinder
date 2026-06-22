@@ -3,6 +3,8 @@ const validator = require("validator");
 const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
+
+
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -35,6 +37,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     minLength: 2,
+    required: true,
     validate(value) {
       if (!validator.isStrongPassword(value)) {
         throw new Error("Oops! not a strong password, try again" + value);
