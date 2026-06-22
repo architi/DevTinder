@@ -11,42 +11,14 @@ const requestRouter = require("./routes/request");
 const profileRouter = require("./routes/profile");
 
 
-// //API - to update data of the user
-// app.patch("/user/:userId", async (req, res) => {
-//   const userId = req.params?.userId;
-//   const data = req.body;
-
-//   try {
-//     const updationAllowed = ["skills", "gender"];
-//     const checkUpdation = Object.keys(data).every((key) =>
-//       updationAllowed.includes(key),
-//     );
-
-//     if (!checkUpdation) {
-//       throw new Error("update not allowed");
-//     }
-
-//     if (data?.skills.length > 10) {
-//       throw new Error("skills cant be more than 10");
-//     }
-//     const user = await user.findOneAndUpdate({ _id: userId }, data, {
-//       returnDocument: "after",
-//       runValidators: true,
-//     });
-//     console.log(user);
-//     res.send("user updated successfully!");
-//   } catch (error) {
-//     res.status(400).send("something went wrong while updating");
-//   }
-// });
 
 ConnectDB()
   .then(() => {
-    console.log("now the db is connect and only THEN the server is listening");
+    console.log("database is connected and only THEN the server is listening");
     app.listen(7777, () => {
       console.log("Server is listening / running on port 7777");
     });
   })
   .catch((error) => {
-    console.log("caught an error in connecting the database:" + error.message);
-  });
+    console.log("caught an error in connecting the database due to:" + error.message);
+});
