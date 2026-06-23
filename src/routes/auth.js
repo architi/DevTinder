@@ -4,8 +4,9 @@ const { validateSignUp } = require("../utils/validatation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
+
 authRouter.post("/signup", async (req, res) => {
-  //creating new instance in the collection.
+  //creating new instance in the database-collection
   //validation , validator , util fn
   //password encription from validation ,passwordHash
   //save the user in db with the passwordHash saltround password
@@ -18,6 +19,7 @@ authRouter.post("/signup", async (req, res) => {
     //password encryption
     const passwordHash = await bcrypt.hash(password, 10);
 
+    
     //saving the data in db with the passwordHash
     const user = new User({
       firstName,

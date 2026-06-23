@@ -4,7 +4,7 @@ const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
 
-
+// userSchema is a class
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -74,5 +74,6 @@ userSchema.methods.validatePassword = async function(password){
   return isMatch;
 }
 
+//User is an instance/model of the class userSchema
 const User = Mongoose.model("User", userSchema);
 module.exports = User;

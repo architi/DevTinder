@@ -3,6 +3,7 @@ const app = express();
 const ConnectDB = require("./config/database");
 const cookieParser = require("cookie-parser");
 
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -10,7 +11,15 @@ const authRouter = require("./routes/auth");
 const requestRouter = require("./routes/request");
 const profileRouter = require("./routes/profile");
 
+/*** 
+ upating the data present in database
 
+app.patch("/user", async(req,res)=>{
+  const userId = req.body.userId;
+  const data = req.body;
+  const finding = User.findByIdAndUpdate(userId, data, { runValidators: true }) 
+  })
+***/
 
 ConnectDB()
   .then(() => {
