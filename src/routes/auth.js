@@ -14,6 +14,7 @@ authRouter.post("/signup", async (req, res) => {
     //validation
     validateSignUp(req);
 
+    //extract fields
     const { firstName, lastName, emailId, password } = req.body;
 
     //password encryption
