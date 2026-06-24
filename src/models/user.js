@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const validator = require("validator");
+const validator = require("validator"); // built in fn that helps with validation for fields
 const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
     },
   },
 },
-  {timestamps:true},
+  {timestamps:true}, //creates updated and created timestamp in db for each user instances
 );
 
 userSchema.methods.getJWT = async function(){
