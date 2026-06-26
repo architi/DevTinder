@@ -61,16 +61,22 @@ const userSchema = new mongoose.Schema({
   {timestamps:true}, //creates updated and created timestamp in db for each user instances
 );
 
+
+//jwt token offloaded here to make cause it is closely related to userand called back in login api
+
 userSchema.methods.getJWT = async function(){
   const user = this;
 
   const token = jwt.sign({_id:user._id},"mysecret@key",{expiresIn:"7d"});
+  
   return token;
 }
 
-userSchema.methods.validatePassword = async function(password){
+userSchema.methods.validatePassword = async function(passwordByUser){
   const user = this;
-  const isMatch = await bcrypt.compare(password, user.password);
+  const passwordHash = user.password;
+
+  const isMatch = await bcrypt.compare(passwordByUser,passwordHash);
   return isMatch;
 }
 
