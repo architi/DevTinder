@@ -1,8 +1,8 @@
 const express = require("express");
 
 const profileRouter = express.Router();
-const { userAuth } = require("./middlewares/Auth");
-const { validateProfileEdit } = require("./utils/validatation");
+const { userAuth } = require("../middlewares/Auth");
+const { validateProfileEdit } = require("../utils/validatation");
 
 profileRouter.get("/profile", userAuth, async (req, res) => {
   try {
@@ -10,8 +10,8 @@ profileRouter.get("/profile", userAuth, async (req, res) => {
     console.log("hi welcome back" + user);
 
     res.send(user);
-  } catch (error) {
-    res.status(400).send("please log in again");
+  } catch (err) {
+    res.status(400).send("please log in again: " + err.message);
   }
 });
 
