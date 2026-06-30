@@ -68,10 +68,11 @@ userSchema.methods.getJWT = async function(){
   const user = this;
 
   const token = jwt.sign({_id:user._id},"mysecret@key",{expiresIn:"7d"});
-  
+
   return token;
 }
 
+//takes in the password by user and compare it from the db's hashed password to match
 userSchema.methods.validatePassword = async function(passwordByUser){
   const user = this;
   const passwordHash = user.password;
