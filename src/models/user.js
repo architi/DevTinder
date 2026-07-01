@@ -4,7 +4,7 @@ const Mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
 
-// userSchema is a class
+// userSchema is class
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
