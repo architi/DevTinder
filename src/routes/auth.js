@@ -3,7 +3,7 @@ const authRouter = express.Router();
 const { validateSignUp } = require("../utils/validatation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+
 
 
 //login api
