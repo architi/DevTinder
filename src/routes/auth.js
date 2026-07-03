@@ -4,35 +4,6 @@ const { validateSignUp } = require("../utils/validatation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
-
-
-//login api
-/*** 
- //this is where compare happens cause we want to check the password and this is where jwt is created and res is sent via cookie
-  
- {emailId, password} = req.body
- const emailValid = User.findOne({emailId:emailId});
-
- await bcrypt.compare(password,passwordHash);
- //create jwt if the password correct too
- const token = await jwt.sign({_id:user_id},"key");
-
- sending it off
- res.cookie ("token",token);
-
- //profileedit api accesiing the cookie
- app.patch("/profile", async(res,req)=>{
-    const cookie = req.cookies;
-    //destructing the token out 
-    {token} = cookie;
-    //veryfing that token
-    const myToken = await jwt.verify(token,"key");
-    const {_id} = myToken
-  })
-
-
-*/
-
 authRouter.post("/signup", async (req, res) => {
   //creating new instance in the database-collection
   //validation , validator , util fn
