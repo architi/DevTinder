@@ -35,4 +35,24 @@ profileRouter.patch("/profileEdit", userAuth, async(req, res) => {
   }
 });
 
+
+profileRouter.patch("/profileEditPassword", userAuth, async(req,res)=>{
+  try{
+    const {newPassword} = req.body;
+
+    if(!validator.isStrongPassword(newPassword)){
+      throw new Error("Password is not strong enough");
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+    req.user.password = passwordHash;
+    await req.user.save();
+
+    res.json({ message: "Password updated successfully" });
+  } 
+  catch (error) {
+    res.status(400).send("some error occurred: " + error.message);
+  }
+})
+
 module.exports = profileRouter;
