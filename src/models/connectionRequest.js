@@ -22,7 +22,7 @@ const connectionRequestSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-const ConnectionRequestModel = new mongoose.Model(
+const ConnectionRequestModel = new mongoose.model(
   "ConnectionRequest",
   connectionRequestSchema,
 );
