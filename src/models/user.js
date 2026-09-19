@@ -1,7 +1,8 @@
-const { default: mongoose } = require("mongoose");
+// const { default: mongoose } = require("mongoose");
 const validator = require("validator"); // built in fn that helps with validation for fields
-const Mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 // userSchema is class
 const userSchema = new mongoose.Schema(
@@ -23,7 +24,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minLength: 2,
-      maxLength: 20,
+      maxLength: 40,
       trim: true,
       unique: true,
       lowercase: true,
@@ -87,5 +88,5 @@ userSchema.methods.validatePassword = async function (passwordByUser) {
 };
 
 //User is an instance/model of the class userSchema
-const User = Mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;
