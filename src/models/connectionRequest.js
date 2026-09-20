@@ -10,7 +10,7 @@ const connectionRequestSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
-    Status: {
+    status: {
       type: String,
       required: true,
       enum: {
@@ -26,3 +26,5 @@ const ConnectionRequestModel = new mongoose.model(
   "ConnectionRequest",
   connectionRequestSchema,
 );
+
+module.exports = ConnectionRequestModel;
