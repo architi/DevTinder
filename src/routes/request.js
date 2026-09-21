@@ -51,7 +51,7 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
 
 //CHECK4
  //checking if the user is trying to send request to themselves
- 
+ //pre save hook in the connectionRequestSchema 
 
     const connectionRequest = new ConnectionRequest({
       fromUserId,
@@ -62,9 +62,9 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
     const data = await connectionRequest.save();
 
     res.json({
-      message:"connection request sent successfully",
+      message: req.user.firstName + " " + status + " " + toUser.firstName,
       data,
-    })
+    });
 
   } catch (error) {
     res.status(400).send("ERROR:"+ error.message);
