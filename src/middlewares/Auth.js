@@ -8,11 +8,10 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
-
 const userAuth = async(req, res, next) => {
   try {
     //get the cookie by require then extract/destructure the token from the cookie
-    // const cookies = req.cookie;
+    //const cookies = req.cookie;
     const {token} = req.cookies;
     if(!token){
       throw new Error("No token provided");
