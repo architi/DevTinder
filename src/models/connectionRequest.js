@@ -22,13 +22,14 @@ const connectionRequestSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-connectionRequestSchema.pre("save", function(){
-  const connectRequest = this;
-if (connectRequest.toUserId.equals(connectRequest.fromUserId)) {
-  throw new Error("user cannot send request to themselves");
-}
+connectionRequestSchema.index({ fromUserId: 1, toUserId: 1 });
 
-})
+connectionRequestSchema.pre("save", function () {
+  const connectRequest = this;
+  if (connectRequest.toUserId.equals(connectRequest.fromUserId)) {
+    throw new Error("user cannot send request to themselves");
+  }
+});
 
 const ConnectionRequestModel = mongoose.model(
   "ConnectionRequest",
