@@ -11,13 +11,16 @@
 - PATCH /profile/password
 
 ### connectionRequestRouter
-- POST /request/send/interested/:userId
-- POST /request/send/ignored/:userId
-- POST /request/review/accepted/:requestId
-- POST /request/review/rejected/:requestId
+:/ means dynamic (for these 2 under it)
+- POST/request/send/:status/:toUserId
+  - interested
+  - ignored
+- POST/request/recieve/:status/:requestId 
+  - accepted
+  - rejected
 
 ### userRouter
-- GET /user/feed :gets the other users id
+- GET /user/feed (this gets the other users id)
 - GET /user/connections
 - GET /user/requests
 
