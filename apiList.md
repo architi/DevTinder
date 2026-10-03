@@ -22,7 +22,7 @@
 ### userRouter
 - GET /user/feed (this gets the other users id)
 - GET /user/connections
-- GET /user/requests
+- GET /user/request/received
 
 # status: ignored -> me SENDING left swipping/passing the userId +ent on the feed
         interested -> me SENDING right swipping/liking the userId +ent on the feed
