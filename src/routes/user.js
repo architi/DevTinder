@@ -8,10 +8,12 @@ userRouter.get("/user/request/received", userAuth, async (req, res) => {
         //reviewing pending req means interested other users but the loggedIn user have not accepted or rejected the req yet
 
         const loggedInUser = req.user;
-        const connectionRequests = await connectionRequest.find({
-            toUserId : loggedInUser._id,
+        const connectionRequests = await connectionRequest
+          .find({
+            toUserId: loggedInUser._id,
             status: "interested",
-        })
+          })
+          .populate("fromUserId", ["firstName", "lastName"]);
 
         res.json({
             message:"data fetched successfully",
