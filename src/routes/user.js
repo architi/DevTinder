@@ -13,7 +13,7 @@ userRouter.get("/user/request/received", userAuth, async (req, res) => {
             toUserId: loggedInUser._id,
             status: "interested",
           })
-          .populate("fromUserId", ["firstName", "lastName"]);
+          .populate("fromUserId", "firstName lastName photoUrl age gender skills about");
 
         res.json({
             message:"data fetched successfully",
