@@ -2,6 +2,7 @@ const express = require("express");
 const userRouter = express.Router();
 const { userAuth } = require("../middlewares/Auth");
 let connectionRequest = require("../models/connectionRequest");
+let User = require("../models/user");
 
 const USER_SAFE_DATA = [
   "firstName",
@@ -62,6 +63,34 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
   }
 });
 
-userRouter.get("/user/feed", userAuth, async (req, res) => {});
+userRouter.get("/user/feed", userAuth, async (req, res) => {
+  try{
+    const loggedInUser = req.user;
+    // Fetch all users except the req from or to logged-in user
+    const connections = await connectionRequest.find({
+      $or:[
+        {fromUserId: loggedInUser._id},
+        {toUserId: loggedInUser._id},
+      ]
+    });
+
+    const hideUserIdsFromFeed = new Set();
+    connections.forEach((req)=>{
+      hideUserIdsFromFeed.add(req.fromUserId.toString());
+      hideUserIdsFromFeed.add(req.toUserId.toString());
+    });
+
+    const feedUsers = await User.find({
+      $and: [
+        { _id: { $nin: Array.from(hideUserIdsFromFeed) } },
+        {_id: {$ne: loggedInUser._id}},
+      ]
+    }).select(USER_SAFE_DATA);
+
+    res.json({ data: feedUsers });
+  }catch(err){
+    res.status(400).json({message: "Error fetching feed", error: err.message});
+  }
+});
 
 module.exports = userRouter;
