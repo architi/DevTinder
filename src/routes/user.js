@@ -82,13 +82,13 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
 
     const feedUsers = await User.find({
       $and: [
-        { _id: { $nin: Array.from(hideUserIdsFromFeed) } },
-        {_id: {$ne: loggedInUser._id}},
+        { _id: {$nin: Array.from(hideUserIdsFromFeed)} },
+        { _id: {$ne: loggedInUser._id} },
       ]
     }).select(USER_SAFE_DATA);
 
-    res.json({ data: feedUsers });
-  }catch(err){
+    res.send(feedUsers);
+  }catch(err){ 
     res.status(400).json({message: "Error fetching feed", error: err.message});
   }
 });
