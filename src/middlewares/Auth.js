@@ -14,7 +14,7 @@ const userAuth = async(req, res, next) => {
     //const cookies = req.cookie;
     const {token} = req.cookies;
     if(!token){
-      throw new Error("No token provided");
+      return res.status(401).send("Unauthorized: please login first");
     }
   
     //verify token
