@@ -3,6 +3,7 @@ const authRouter = express.Router();
 const { validateSignUp } = require("../utils/validatation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const { userAuth } = require("../middlewares/auth");
 
 authRouter.post("/signup", async (req, res) => {
   //creating new instance in the database-collection
@@ -19,7 +20,6 @@ authRouter.post("/signup", async (req, res) => {
     //password encryption by hashing
     const passwordHash = await bcrypt.hash(password, 10);
 
-    
     //saving the data in db with the passwordHash
     const user = new User({
       firstName,
@@ -65,9 +65,13 @@ authRouter.post("/login", async (req, res) => {
   }
 });
 
-authRouter.post("/logout", async(req,res) => {
+authRouter.post("/logout", userAuth, async (req, res) => {
   //token set to null and expire the cookie
-  res.cookie("token",null,{expires: new Date(Date.now())});
-  res.json({ message: `${req.user.firstname} logged out successfully` });
-})
+  const firstName = req.user.firstName;
+  res.cookie("token", null, { expires: new Date(Date.now()) });
+  //or res.clearCookie("token");
+  res.json({
+    message: `${firstName} logged out successfully`,
+  });
+});
 module.exports = authRouter;

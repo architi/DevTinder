@@ -1,7 +1,6 @@
 //for all the other APIs token authentication
 // the userAuth middleware is responsible for verifying the user's authentication status by checking the token sent in the cookie. It ensures that only authenticated users can access protected routes, such as viewing and editing their profiles. If the token is valid, it allows the request to proceed; otherwise, it responds with an unauthorized error message.
 
-//cookie issue!
 
 //verification of token and sending the user in req back 
 
