@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema(
       maxLength: 15,
     },
 
+    age: {
+      type: Number,
+      min: [10, "Age must be at least 10."],
+      max: [100, "Age cannot exceed 100."],
+    },
+
     emailId: {
       type: String,
       required: true,
@@ -68,11 +74,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true, //removes extra spaces from the string
     },
-    // validate(value) {
-    //   if (!["male", "female", "others"].includes(value)) {
-    //     throw new Error("gender data is not valid");
-    //   }
-    // },
   },
   { timestamps: true }, //creates updated and created timestamp in db for each user instances
 );

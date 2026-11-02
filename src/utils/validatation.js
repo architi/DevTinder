@@ -22,12 +22,31 @@ const validateProfileEdit = (req) => {
     "gender",
     "about",
     "photoUrl",
+    "age",
   ];
 
   const isValid = Object.keys(req.body).every((field) =>
     allowedFields.includes(field),
   );
 
-  return isValid;
+  if (!isValid) {
+    throw new Error("Invalid fields in profile update.");
+  }
+
+  if (req.body.age !== undefined) {
+    const age = req.body.age;
+
+    if (
+      typeof age !== "number" ||
+      !Number.isInteger(age) ||
+      age < 10 ||
+      age > 100
+    ) {
+      throw new Error("Age must be a whole number between 10 and 100.");
+    }
+  }
+
+  return true;
 };
+
 module.exports = { validateSignUp, validateProfileEdit };
