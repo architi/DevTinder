@@ -16,32 +16,32 @@ profileRouter.get("/profile", userAuth, async (req, res) => {
   }
 });
 
-profileRouter.patch("/profileEdit", userAuth, async(req, res) => {
+profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
   try {
     if (!validateProfileEdit(req)) {
       throw new Error("invalid fields");
     }
-    
+
     const loggedInUser = req.user;
 
-    Object.keys(req.body).forEach((key)=>{
-      loggedInUser[key] = req.body[key]
-    })
+    Object.keys(req.body).forEach((key) => {
+      loggedInUser[key] = req.body[key];
+    });
 
     await loggedInUser.save();
-    res.json({ name: loggedInUser.firstName, message: "Profile updated successfully" });
-
+    res.json({
+      data: loggedInUser,
+    });
   } catch (error) {
     res.status(400).send("some error occurred: " + error.message);
   }
 });
 
+profileRouter.patch("/profileEditPassword", userAuth, async (req, res) => {
+  try {
+    const { newPassword } = req.body;
 
-profileRouter.patch("/profileEditPassword", userAuth, async(req,res)=>{
-  try{
-    const {newPassword} = req.body;
-
-    if(!validator.isStrongPassword(newPassword)){
+    if (!validator.isStrongPassword(newPassword)) {
       throw new Error("Password is not strong enough");
     }
 
@@ -50,10 +50,9 @@ profileRouter.patch("/profileEditPassword", userAuth, async(req,res)=>{
     await req.user.save();
 
     res.json({ message: "Password updated successfully" });
-  } 
-  catch (error) {
+  } catch (error) {
     res.status(400).send("some error occurred: " + error.message);
   }
-})
+});
 
 module.exports = profileRouter;

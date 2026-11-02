@@ -55,25 +55,25 @@ const userSchema = new mongoose.Schema(
       enum: {
         values: ["male", "female", "others"],
         message: `gender data is not valid, please try again`,
-        },
       },
-
-      about:{
-        type: String,
-        maxLength: 300,
-        trim: true,
-      },
-
-      photoUrl:{
-        type: String,
-        trim: true, //removes extra spaces from the string
-      },
-      // validate(value) {
-      //   if (!["male", "female", "others"].includes(value)) {
-      //     throw new Error("gender data is not valid");
-      //   }
-      // },
     },
+
+    about: {
+      type: String,
+      maxLength: 300,
+      trim: true,
+    },
+
+    photoUrl: {
+      type: String,
+      trim: true, //removes extra spaces from the string
+    },
+    // validate(value) {
+    //   if (!["male", "female", "others"].includes(value)) {
+    //     throw new Error("gender data is not valid");
+    //   }
+    // },
+  },
   { timestamps: true }, //creates updated and created timestamp in db for each user instances
 );
 
