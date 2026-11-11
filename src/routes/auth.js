@@ -3,7 +3,7 @@ const authRouter = express.Router();
 const { validateSignUp } = require("../utils/validatation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const { userAuth } = require("../middlewares/auth");
+const { userAuth } = require("../middlewares/Auth");
 
 authRouter.post("/signup", async (req, res) => {
   //creating new instance in the database-collection
